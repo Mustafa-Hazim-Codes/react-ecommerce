@@ -1,14 +1,16 @@
-import products from "../data/product";
-
-
+import products from "../data/products";
+import ProductCard from "../components/ProductCard";
 
 const Home = () => {
-
-  console.log(products);
   return (
     <div>
-      <h1>Welcome to Shop</h1>
-      <p>Browse our products</p>
+      <h1>Products</h1>
+
+      <div className="product-list">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
     </div>
   );
 };
