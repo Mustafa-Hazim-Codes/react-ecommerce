@@ -1,9 +1,11 @@
-import React from 'react'
+import "../styles/footer.css";
 
-function Footer() {
+const Footer = () => {
   return (
-    <div>Footer</div>
-  )
-}
+    <footer className="footer">
+      <p>© {new Date().getFullYear()} Shop. All rights reserved.</p>
+    </footer>
+  );
+};
 
-export default Footer
+export default Footer;
