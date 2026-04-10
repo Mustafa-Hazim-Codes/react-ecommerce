@@ -5,11 +5,17 @@
   padding: 16px 32px;
   background-color: #111;
   color: white;
+  position: relative;
 }
 
 .logo {
   font-size: 22px;
   font-weight: bold;
+}
+
+/* Links */
+.nav-links {
+  display: flex;
 }
 
 .nav-links a {
@@ -23,8 +29,40 @@
   color: white;
 }
 
-/* Active link */
 .active {
   color: #fff;
   border-bottom: 2px solid #fff;
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* 📱 Mobile styles */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #111;
+    flex-direction: column;
+    width: 200px;
+    padding: 20px;
+    display: none;
+  }
+
+  .nav-links a {
+    margin: 10px 0;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
 }

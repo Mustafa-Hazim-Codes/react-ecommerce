@@ -1,13 +1,27 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import "../styles/navbar.css";
+
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <nav className="navbar">
       <h2 className="logo">Shop</h2>
 
-      <div className="nav-links">
-        <Link to="/">Home</Link>
-        <Link to="/cart">Cart</Link>
+      {/* Hamburger */}
+      <div className="hamburger" onClick={() => setIsOpen(!isOpen)}>
+        ☰
+      </div>
+
+      {/* Links */}
+      <div className={`nav-links ${isOpen ? "open" : ""}`}>
+        <NavLink to="/" onClick={() => setIsOpen(false)}>
+          Home
+        </NavLink>
+        <NavLink to="/cart" onClick={() => setIsOpen(false)}>
+          Cart
+        </NavLink>
       </div>
     </nav>
   );
