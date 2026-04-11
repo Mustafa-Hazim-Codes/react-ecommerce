@@ -1,28 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import products from "../data/products";
 import ProductCard from "../components/ProductCard";
+import { useMemo } from "react";
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
 
   const maxProductPrice = Math.max(...products.map(p => p.price));
-  const [maxPrice, setMaxPrice] = useState(maxProductPrice);
+  const [maxPrice, setMaxPrice] = useState((maxProductPrice+0.99).toFixed(2));
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   const categories = ["all", ...new Set(products.map(p => p.category))];
 
-  const filteredProducts = products.filter((product) => {
-    const matchesCategory =
-      selectedCategory === "all" || product.category === selectedCategory;
+  const filteredProducts = useMemo(() => {
+    return products.filter((product) => {
+      const matchesCategory =
+        selectedCategory === "all" ||
+        product.category === selectedCategory;
 
-    const matchesSearch = product.title
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
+      const matchesSearch = product.title
+        .toLowerCase()
+        .includes(debouncedQuery.toLowerCase());
 
-    const matchesPrice = product.price <= maxPrice;
+      const matchesPrice = product.price <= maxPrice;
 
-    return matchesCategory && matchesSearch && matchesPrice;
-  });
+      return matchesCategory && matchesSearch && matchesPrice;
+    });
+  }, [products, selectedCategory, debouncedQuery, maxPrice]);
 
   return (
     <div>
