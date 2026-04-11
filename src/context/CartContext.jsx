@@ -17,18 +17,19 @@ export const CartProvider = ({ children }) => {
     // Add to cart
     const addToCart = (product) => {
         setCartItems((prev) => {
-            const existingItem = prev.find((item) => item.id === product.id);
+            const index = prev.findIndex((item) => item.id === product.id);
 
-            if (existingItem) {
-                // Increase quantity
-                return prev.map((item) =>
-                    item.id === product.id
-                        ? { ...item, quantity: item.quantity + 1 }
-                        : item
-                );
+            if (index !== -1) {
+                // Update existing item safely
+                const updatedCart = [...prev];
+                updatedCart[index] = {
+                    ...updatedCart[index],
+                    quantity: updatedCart[index].quantity + 1,
+                };
+                return updatedCart;
             }
 
-            // Add new item
+            // Add new product
             return [...prev, { ...product, quantity: 1 }];
         });
     };
