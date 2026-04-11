@@ -24,7 +24,23 @@ export const CartProvider = ({ children }) => {
         });
     };
 
+    const updateQuantity = (productId, amount) => {
+        setCartItems((prev) =>
+            prev
+                .map((item) => {
+                    if (item.id === productId) {
+                        const newQuantity = item.quantity + amount;
 
+                        // Remove item if quantity goes to 0
+                        if (newQuantity <= 0) return null;
+
+                        return { ...item, quantity: newQuantity };
+                    }
+                    return item;
+                })
+                .filter(Boolean) // remove null items
+        );
+    };
 
     const removeFromCart = (productId) => {
         setCartItems((prev) =>
@@ -33,7 +49,7 @@ export const CartProvider = ({ children }) => {
     };
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
+        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity }}>
             {children}
         </CartContext.Provider>
     );

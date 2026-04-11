@@ -1,7 +1,7 @@
 import { useCart } from "../context/CartContext";
 
 const Cart = () => {
-  const { cartItems, removeFromCart } = useCart();
+  const { cartItems, updateQuantity } = useCart();
 
   if (cartItems.length === 0) {
     return <h2>Your cart is empty</h2>;
@@ -14,12 +14,19 @@ const Cart = () => {
       {cartItems.map((item) => (
         <div key={item.id} className="cart-item">
           <h3>{item.title}</h3>
-          <p>Price: ${item.price}</p>
-          <p>Quantity: {item.quantity}</p>
+          <p>${item.price}</p>
 
-          <button onClick={() => removeFromCart(item.id)}>
-            Remove
-          </button>
+          <div className="quantity-controls">
+            <button onClick={() => updateQuantity(item.id, -1)}>
+              −
+            </button>
+
+            <span>{item.quantity}</span>
+
+            <button onClick={() => updateQuantity(item.id, 1)}>
+              +
+            </button>
+          </div>
         </div>
       ))}
     </div>

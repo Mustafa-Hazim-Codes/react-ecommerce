@@ -143,3 +143,23 @@ p {
   border: none;
   cursor: pointer;
 }
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.quantity-controls button {
+  padding: 6px 10px;
+  border: none;
+  background: #111;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.quantity-controls span {
+  font-weight: bold;
+}
