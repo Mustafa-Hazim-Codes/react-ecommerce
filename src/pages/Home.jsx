@@ -6,6 +6,9 @@ const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
+  const maxProductPrice = Math.max(...products.map(p => p.price));
+  const [maxPrice, setMaxPrice] = useState(maxProductPrice);
+
   const categories = ["all", ...new Set(products.map(p => p.category))];
 
   const filteredProducts = products.filter((product) => {
@@ -16,9 +19,11 @@ const Home = () => {
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
 
-    return matchesCategory && matchesSearch;
+    const matchesPrice = product.price <= maxPrice;
+
+    return matchesCategory && matchesSearch && matchesPrice;
   });
-  
+
   return (
     <div>
       <h1>Products</h1>
@@ -30,6 +35,18 @@ const Home = () => {
         onChange={(e) => setSearchQuery(e.target.value)}
         className="search-input"
       />
+
+      <div className="price-filter">
+        <label>Max Price: ${maxPrice}</label>
+
+        <input
+          type="range"
+          min="0"
+          max={maxProductPrice}
+          value={maxPrice}
+          onChange={(e) => setMaxPrice(Number(e.target.value))}
+        />
+      </div>
 
       {/* Filters */}
       <div className="filters">
@@ -50,6 +67,8 @@ const Home = () => {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
+
+      {filteredProducts.length === 0 && <p>No products found</p>}
     </div>
   );
 };

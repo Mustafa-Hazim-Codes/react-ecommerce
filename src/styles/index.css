@@ -182,3 +182,18 @@ p {
   outline: none;
   border-color: #111;
 }
+
+.price-filter {
+  margin: 20px 0;
+}
+
+.price-filter label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.price-filter input[type="range"] {
+  width: 100%;
+  cursor: pointer;
+}
