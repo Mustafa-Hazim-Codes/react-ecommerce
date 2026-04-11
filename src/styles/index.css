@@ -87,7 +87,7 @@ p {
 }
 
 .active-filter {
-  background: #111;
+  background: #111 !important;
   color: white;
 }
 
