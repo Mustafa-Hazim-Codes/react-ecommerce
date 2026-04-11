@@ -64,3 +64,17 @@
     max-width: 100%;
   }
 }
+
+.not-found {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.not-found h2 {
+  margin-bottom: 10px;
+}
+
+.not-found a {
+  color: #007bff;
+  text-decoration: none;
+}
