@@ -2,14 +2,25 @@ import { useEffect, useState } from "react";
 import products from "../data/products";
 import ProductCard from "../components/ProductCard";
 import { useMemo } from "react";
+import Spinner from "../components/Spinner";
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 500); // simulate loading
+
+    return () => clearTimeout(timer);
+  }, []);
+
 
   const maxProductPrice = Math.max(...products.map(p => p.price));
-  const [maxPrice, setMaxPrice] = useState((maxProductPrice+0.99).toFixed(2));
+  const [maxPrice, setMaxPrice] = useState((maxProductPrice + 0.99).toFixed(2));
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -36,6 +47,9 @@ const Home = () => {
       return matchesCategory && matchesSearch && matchesPrice;
     });
   }, [products, selectedCategory, debouncedQuery, maxPrice]);
+
+
+  if (loading) return <Spinner />;
 
   return (
     <div>
