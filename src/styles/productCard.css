@@ -69,8 +69,33 @@
   opacity: 1;
 }
 
+
 @media (max-width: 768px) {
   .card-image {
-    height: 150px;
+    height: 140px;
+  }
+
+  .card-content h3 {
+    font-size: 14px;
+  }
+
+  .price {
+    font-size: 14px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .product-details {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .details h1 {
+    font-size: 20px;
+  }
+
+  .price {
+    font-size: 18px;
   }
 }

@@ -63,17 +63,6 @@ const Home = () => {
         className="search-input"
       />
 
-      <div className="price-filter">
-        <label>Max Price: ${maxPrice}</label>
-
-        <input
-          type="range"
-          min="0"
-          max={maxProductPrice}
-          value={maxPrice}
-          onChange={(e) => setMaxPrice(Number(e.target.value))}
-        />
-      </div>
 
       {/* Filters */}
       <div className="filters">
@@ -86,6 +75,20 @@ const Home = () => {
             {cat}
           </button>
         ))}
+      </div>
+
+
+      
+      <div className="price-filter">
+        <label>Max Price: ${maxPrice}</label>
+
+        <input
+          type="range"
+          min="0"
+          max={maxProductPrice}
+          value={maxPrice}
+          onChange={(e) => setMaxPrice(Number(e.target.value))}
+        />
       </div>
 
       {/* Products */}

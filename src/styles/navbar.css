@@ -66,3 +66,13 @@
     display: flex;
   }
 }
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 12px 16px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+}
