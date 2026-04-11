@@ -1,24 +1,25 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/productCard.css";
 
 const ProductCard = ({ product }) => {
   return (
-    <div className="product-card">
-      <Link to={`/product/${product.id}`}>
+    <Link to={`/product/${product.id}`} className="product-card">
+      <div className="card-image">
         <img
           src={product.image}
           alt={product.title}
           onError={(e) => {
-            e.target.src = "https://picsum.photos/200";
+            e.target.src = "https://picsum.photos/300";
           }}
         />
-      </Link>
+      </div>
 
-      <h3>{product.title}</h3>
-      <p className="price">${product.price}</p>
-    </div>
+      <div className="card-content">
+        <h3>{product.title}</h3>
+        <p className="price">${product.price}</p>
+      </div>
+    </Link>
   );
 };
 
-export default React.memo(ProductCard);
+export default ProductCard;
