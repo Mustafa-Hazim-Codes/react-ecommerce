@@ -168,3 +168,17 @@ p {
 .quantity-controls span {
   font-weight: bold;
 }
+
+.search-input {
+  width: 100%;
+  padding: 10px 14px;
+  margin: 20px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #111;
+}
