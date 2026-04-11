@@ -23,16 +23,35 @@ const Cart = () => {
 
       {cartItems.map((item) => (
         <div key={item.id} className="cart-item">
-          <h3>{item.title}</h3>
-          <p>${item.price}</p>
 
-          <div className="quantity-controls">
-            <button onClick={() => updateQuantity(item.id, -1)}>−</button>
-            <span>{item.quantity}</span>
-            <button onClick={() => updateQuantity(item.id, 1)}>+</button>
+          {/* Image */}
+          <img
+            src={item.image}
+            alt={item.title}
+            className="cart-image"
+            onError={(e) => {
+              e.target.src = "https://picsum.photos/100";
+            }}
+          />
+
+          <div className="cart-info">
+            {/* Clickable title */}
+            <Link to={`/product/${item.id}`} className="cart-title">
+              {item.title}
+            </Link>
+
+            <p>${item.price}</p>
+
+            <div className="quantity-controls">
+              <button onClick={() => updateQuantity(item.id, -1)}>−</button>
+              <span>{item.quantity}</span>
+              <button onClick={() => updateQuantity(item.id, 1)}>+</button>
+            </div>
+
+            <button className="remove-btn" onClick={() => removeFromCart(item.id)}>
+              Remove
+            </button>
           </div>
-
-          <button className="remove-btn" onClick={() => removeFromCart(item.id)}>Remove</button>
         </div>
       ))}
 
