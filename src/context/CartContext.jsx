@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
+import { toast } from "react-toastify";
 
 const CartContext = createContext();
 
@@ -21,6 +22,7 @@ export const CartProvider = ({ children }) => {
 
             if (index !== -1) {
                 // Update existing item safely
+                toast.info("Increased quantity");
                 const updatedCart = [...prev];
                 updatedCart[index] = {
                     ...updatedCart[index],
@@ -30,6 +32,9 @@ export const CartProvider = ({ children }) => {
             }
 
             // Add new product
+            toast.success("Added to cart", {
+                theme: "colored",
+            });
             return [...prev, { ...product, quantity: 1 }];
         });
     };
@@ -39,16 +44,18 @@ export const CartProvider = ({ children }) => {
             prev
                 .map((item) => {
                     if (item.id === productId) {
-                        const newQuantity = item.quantity + amount;
+                        const newQty = item.quantity + amount;
 
-                        // Remove item if quantity goes to 0
-                        if (newQuantity <= 0) return null;
+                        if (newQty <= 0) {
+                            toast.error("Removed from cart");
+                            return null;
+                        }
 
-                        return { ...item, quantity: newQuantity };
+                        return { ...item, quantity: newQty };
                     }
                     return item;
                 })
-                .filter(Boolean) // remove null items
+                .filter(Boolean)
         );
     };
 
@@ -59,6 +66,7 @@ export const CartProvider = ({ children }) => {
     };
 
     const removeFromCart = (productId) => {
+        toast.error("Removed from cart");
         setCartItems((prev) =>
             prev.filter((item) => item.id !== productId)
         );
