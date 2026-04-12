@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "../styles/navbar.css";
 
 const Navbar = () => {
@@ -7,7 +7,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <h2 className="logo">Shop</h2>
+      <h2 className="logo"><Link to={'/'}>Shop</Link></h2>
 
       {/* Hamburger */}
       <div className="hamburger" onClick={() => setIsOpen(!isOpen)}>

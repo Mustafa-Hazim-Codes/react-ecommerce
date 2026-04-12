@@ -309,7 +309,151 @@ p {
   }
 
   .cart-image {
-    width: 100%;
+    min-width: 220px;
     height: 150px;
+  }
+}
+
+.checkout-page {
+  padding: 2rem;
+}
+
+.checkout-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.checkout-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+/* CARD STYLE (matches your product cards) */
+.checkout-form,
+.checkout-summary {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* FORM */
+.checkout-form h3 {
+  margin-bottom: 1rem;
+}
+
+.checkout-form input,
+.checkout-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  transition: 0.2s;
+}
+
+.checkout-form input:focus,
+.checkout-form select:focus {
+  border-color: #333;
+  outline: none;
+}
+
+/* BUTTON (important styling) */
+.checkout-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #111;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.checkout-btn:hover {
+  background: #333;
+  transform: translateY(-1px);
+}
+
+/* SUMMARY */
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+  font-size: 0.95rem;
+}
+
+.summary-total {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+}
+
+.empty {
+  color: #888;
+}
+
+@media (max-width: 768px) {
+  .checkout-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+.checkout-btn-cart {
+  background: green;
+  color: white;
+  padding: 4px 8px;
+}
+
+.cart-summary {
+  margin-top: 30px;
+  text-align: right;
+}
+
+/* Checkout Button */
+.checkout-btn-cart {
+  margin-top: 15px;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #111, #333);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* Hover */
+.checkout-btn-cart:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #000, #222);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Click */
+.checkout-btn-cart:active {
+  transform: scale(0.98);
+}
+
+/* Disabled (future use) */
+.checkout-btn-cart:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+
+@media (max-width: 768px) {
+  .cart-summary {
+    text-align: center;
+  }
+
+  .checkout-btn-cart {
+    width: 100%;
   }
 }

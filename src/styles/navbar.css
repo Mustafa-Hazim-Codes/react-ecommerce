@@ -8,9 +8,11 @@
   position: relative;
 }
 
-.logo {
+.logo a {
   font-size: 22px;
   font-weight: bold;
+  color: white;
+  text-decoration: none;
 }
 
 /* Links */

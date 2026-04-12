@@ -85,9 +85,10 @@ const Home = () => {
         <input
           type="range"
           min="0"
-          max={maxProductPrice}
+          setp="1"
+          max={maxProductPrice || 0}
           value={maxPrice}
-          onChange={(e) => setMaxPrice(Number(e.target.value))}
+          onChange={(e) => setMaxPrice(Number(e.target.value)+2)}
         />
       </div>
 
