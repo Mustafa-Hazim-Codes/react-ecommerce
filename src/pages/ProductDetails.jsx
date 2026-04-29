@@ -45,6 +45,20 @@ const ProductDetails = () => {
         ];
 
   const selectedImage = galleryImages[selectedImageIndex] || galleryImages[0];
+  const rating = 4 + (product.id % 10) / 10;
+  const reviewCount = 18 + product.id * 7;
+  const reviews = [
+    {
+      name: "Avery Stone",
+      rating: 5,
+      text: "Arrived quickly and feels better than expected for the price.",
+    },
+    {
+      name: "Jordan Lee",
+      rating: 4,
+      text: "Good quality overall. The product matched the photos and was easy to use.",
+    },
+  ];
 
   return (
     <div className="product-details">
@@ -87,6 +101,14 @@ const ProductDetails = () => {
         </Link>
         <span className="product-category">{product.category}</span>
         <h1>{product.title}</h1>
+        <div className="product-rating" aria-label={`Rated ${rating.toFixed(1)} out of 5`}>
+          <span aria-hidden="true">
+            {"★".repeat(Math.floor(rating))}
+            {rating < 5 ? "☆" : ""}
+          </span>
+          <strong>{rating.toFixed(1)}</strong>
+          <a href="#reviews">{reviewCount} reviews</a>
+        </div>
         <p className="price">${product.price}</p>
         <p className="description">{product.description}</p>
 
@@ -104,6 +126,41 @@ const ProductDetails = () => {
             View Cart
           </Button>
         </div>
+
+        <section id="reviews" className="reviews-panel" aria-labelledby="reviews-title">
+          <div className="reviews-heading">
+            <div>
+              <h2 id="reviews-title">Customer reviews</h2>
+              <p>{reviewCount} shoppers rated this product</p>
+            </div>
+            <strong>{rating.toFixed(1)}/5</strong>
+          </div>
+
+          <div className="rating-bars" aria-label="Rating breakdown">
+            {[5, 4, 3].map((score) => (
+              <div key={score}>
+                <span>{score} star</span>
+                <span className="rating-track">
+                  <span style={{ width: `${score === 5 ? 74 : score === 4 ? 20 : 6}%` }} />
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div className="review-list">
+            {reviews.map((review) => (
+              <article key={review.name} className="review-card">
+                <div>
+                  <strong>{review.name}</strong>
+                  <span aria-label={`${review.rating} out of 5 stars`}>
+                    {"★".repeat(review.rating)}
+                  </span>
+                </div>
+                <p>{review.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );
