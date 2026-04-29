@@ -3,7 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Button } from "../components/ui";
-import products from "../data/products";
+import Spinner from "../components/Spinner";
+import { useProduct } from "../hooks/useProducts";
 import { addToCart } from "../store/cartSlice";
 import { selectIsWishlisted, toggleWishlist } from "../store/wishlistSlice";
 import "../styles/productDetails.css";
@@ -12,8 +13,10 @@ const ProductDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const { product, loading, error } = useProduct(id);
 
   const productId = Number(id);
+  const wishlisted = useSelector(selectIsWishlisted(productId));
 
   if (!productId) {
     return (
@@ -24,7 +27,17 @@ const ProductDetails = () => {
     );
   }
 
-  const product = products.find((p) => p.id === productId);
+  if (loading) return <Spinner />;
+
+  if (error) {
+    return (
+      <div className="not-found">
+        <h2>Unable to load product</h2>
+        <p>{error}</p>
+        <Link to="/products">Back to products</Link>
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -48,7 +61,6 @@ const ProductDetails = () => {
         ];
 
   const selectedImage = galleryImages[selectedImageIndex] || galleryImages[0];
-  const wishlisted = useSelector(selectIsWishlisted(product.id));
   const rating = 4 + (product.id % 10) / 10;
   const reviewCount = 18 + product.id * 7;
   const reviews = [

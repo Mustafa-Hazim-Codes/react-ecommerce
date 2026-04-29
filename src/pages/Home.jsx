@@ -1,28 +1,28 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import products from "../data/products";
 import ProductCard from "../components/ProductCard";
 import { useMemo } from "react";
 import Spinner from "../components/Spinner";
 import { Button, Input } from "../components/ui";
+import { useProducts } from "../hooks/useProducts";
 
 const Home = () => {
+  const { products, loading, error } = useProducts();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState(searchQuery);
-  const [loading, setLoading] = useState(true);
+
+
+  const maxProductPrice = products.length
+    ? Math.max(...products.map(p => p.price))
+    : 0;
+  const [maxPrice, setMaxPrice] = useState((maxProductPrice + 0.99).toFixed(2));
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 500); // simulate loading
-
-    return () => clearTimeout(timer);
-  }, []);
-
-
-  const maxProductPrice = Math.max(...products.map(p => p.price));
-  const [maxPrice, setMaxPrice] = useState((maxProductPrice + 0.99).toFixed(2));
+    if (maxProductPrice > 0) {
+      setMaxPrice((maxProductPrice + 0.99).toFixed(2));
+    }
+  }, [maxProductPrice]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -67,6 +67,15 @@ const Home = () => {
 
 
   if (loading) return <Spinner />;
+
+  if (error) {
+    return (
+      <div className="listing-empty">
+        <h2>Unable to load products</h2>
+        <p>{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div>

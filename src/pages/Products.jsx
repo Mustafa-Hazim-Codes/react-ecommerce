@@ -1,9 +1,11 @@
 import { useMemo, useState } from "react";
 import ProductCard from "../components/ProductCard";
+import Spinner from "../components/Spinner";
 import { Button, Input, Select } from "../components/ui";
-import products from "../data/products";
+import { useProducts } from "../hooks/useProducts";
 
 const Products = () => {
+  const { products, loading, error } = useProducts();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("featured");
@@ -29,6 +31,17 @@ const Products = () => {
       return a.id - b.id;
     });
   }, [selectedCategory, searchQuery, sortBy]);
+
+  if (loading) return <Spinner />;
+
+  if (error) {
+    return (
+      <div className="listing-empty">
+        <h2>Unable to load products</h2>
+        <p>{error}</p>
+      </div>
+    );
+  }
 
   return (
     <section className="listing-page" aria-labelledby="listing-title">
