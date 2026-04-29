@@ -1,76 +1,38 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { productService } from "../services/productService";
 
+export const productKeys = {
+  all: ["products"],
+  lists: () => [...productKeys.all, "list"],
+  details: () => [...productKeys.all, "detail"],
+  detail: (productId) => [...productKeys.details(), productId],
+};
+
 export const useProducts = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const query = useQuery({
+    queryKey: productKeys.lists(),
+    queryFn: productService.getProducts,
+  });
 
-  useEffect(() => {
-    let isMounted = true;
-
-    const loadProducts = async () => {
-      try {
-        const productList = await productService.getProducts();
-
-        if (isMounted) {
-          setProducts(productList);
-          setError("");
-        }
-      } catch (err) {
-        if (isMounted) {
-          setError(err.message);
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    };
-
-    loadProducts();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  return { products, loading, error };
+  return {
+    ...query,
+    products: query.data || [],
+    loading: query.isLoading,
+    error: query.error?.message || "",
+  };
 };
 
 export const useProduct = (productId) => {
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const query = useQuery({
+    queryKey: productKeys.detail(productId),
+    queryFn: () => productService.getProductById(productId),
+    enabled: Boolean(productId),
+  });
 
-  useEffect(() => {
-    let isMounted = true;
-
-    const loadProduct = async () => {
-      try {
-        const productData = await productService.getProductById(productId);
-
-        if (isMounted) {
-          setProduct(productData);
-          setError("");
-        }
-      } catch (err) {
-        if (isMounted) {
-          setError(err.message);
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    };
-
-    loadProduct();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [productId]);
-
-  return { product, loading, error };
+  return {
+    ...query,
+    product: query.data || null,
+    loading: query.isLoading,
+    error: query.error?.message || "",
+  };
 };
