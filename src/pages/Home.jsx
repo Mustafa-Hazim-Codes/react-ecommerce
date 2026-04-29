@@ -32,6 +32,21 @@ const Home = () => {
   }, [searchQuery]);
 
   const categories = ["all", ...new Set(products.map(p => p.category))];
+  const featuredProducts = [...products]
+    .sort((a, b) => b.price - a.price)
+    .slice(0, 3);
+  const categoryShowcase = categories
+    .filter((category) => category !== "all")
+    .map((category) => {
+      const categoryProducts = products.filter((product) => product.category === category);
+      const previewProduct = categoryProducts[0];
+
+      return {
+        name: category,
+        count: categoryProducts.length,
+        image: previewProduct?.image,
+      };
+    });
 
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
@@ -101,6 +116,61 @@ const Home = () => {
             <strong>{products[0]?.title}</strong>
             <p>${products[0]?.price}</p>
           </div>
+        </div>
+      </section>
+
+      <section className="featured-section" aria-labelledby="featured-title">
+        <div className="section-heading">
+          <div>
+            <p className="section-kicker">Featured products</p>
+            <h2 id="featured-title">Popular upgrades worth a look</h2>
+          </div>
+          <Button as="a" href="#products" variant="outline" size="sm">
+            View All
+          </Button>
+        </div>
+
+        <div className="featured-grid">
+          {featuredProducts.map((product) => (
+            <ProductCard key={`featured-${product.id}`} product={product} />
+          ))}
+        </div>
+      </section>
+
+      <section className="categories-showcase" aria-labelledby="categories-title">
+        <div className="section-heading">
+          <div>
+            <p className="section-kicker">Shop by category</p>
+            <h2 id="categories-title">Find what fits your day</h2>
+          </div>
+        </div>
+
+        <div className="category-grid">
+          {categoryShowcase.map((category) => (
+            <button
+              type="button"
+              key={category.name}
+              className="category-tile"
+              onClick={() => {
+                setSelectedCategory(category.name);
+                document
+                  .getElementById("products")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              <img
+                src={category.image}
+                alt=""
+                onError={(e) => {
+                  e.target.src = "https://picsum.photos/480/320";
+                }}
+              />
+              <span>
+                <strong>{category.name}</strong>
+                {category.count} products
+              </span>
+            </button>
+          ))}
         </div>
       </section>
 
