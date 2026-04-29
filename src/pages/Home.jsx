@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import products from "../data/products";
 import ProductCard from "../components/ProductCard";
 import { useMemo } from "react";
@@ -70,21 +71,23 @@ const Home = () => {
   return (
     <div>
       <section className="home-hero" aria-labelledby="home-hero-title">
-        <div className="hero-copy">
-          <p className="hero-kicker">Fresh picks for everyday upgrades</p>
-          <h1 id="home-hero-title">Shop smarter essentials in one place</h1>
-          <p className="hero-description">
-            Browse practical electronics, fashion, and accessories with quick
-            filtering and a simple cart flow built for easy checkout.
-          </p>
+        <div className="hero-content">
+          <div className="hero-copy">
+            <p className="hero-kicker">Fresh picks for everyday upgrades</p>
+            <h1 id="home-hero-title">Shop sharper gear for work, style, and play</h1>
+            <p className="hero-description">
+              Curated essentials, clean filtering, and a checkout flow that keeps
+              your next upgrade easy from first click to cart.
+            </p>
 
-          <div className="hero-actions">
-            <Button as="a" href="#products" variant="light">
-              Shop Now
-            </Button>
-            <Button as="a" href="#filters" variant="ghost-light">
-              Browse Categories
-            </Button>
+            <div className="hero-actions">
+              <Button as={Link} to="/products" variant="light">
+                Shop Now
+              </Button>
+              <Button as="a" href="#categories-title" variant="ghost-light">
+                Explore Categories
+              </Button>
+            </div>
           </div>
 
           <div className="hero-stats" aria-label="Store highlights">
@@ -103,18 +106,35 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="hero-product" aria-label="Featured product">
-          <img
-            src={products[0]?.image}
-            alt={products[0]?.title || "Featured product"}
-            onError={(e) => {
-              e.target.src = "https://picsum.photos/560/420";
-            }}
-          />
-          <div>
-            <span>Featured</span>
-            <strong>{products[0]?.title}</strong>
-            <p>${products[0]?.price}</p>
+        <div className="hero-showcase" aria-label="Featured product">
+          <div className="hero-product hero-product-main">
+            <img
+              src={products[0]?.image}
+              alt={products[0]?.title || "Featured product"}
+              onError={(e) => {
+                e.target.src = "https://picsum.photos/560/420";
+              }}
+            />
+            <div>
+              <span>New arrival</span>
+              <strong>{products[0]?.title}</strong>
+              <p>${products[0]?.price}</p>
+            </div>
+          </div>
+
+          <div className="hero-product hero-product-small">
+            <img
+              src={featuredProducts[0]?.image}
+              alt={featuredProducts[0]?.title || "Featured product"}
+              onError={(e) => {
+                e.target.src = "https://picsum.photos/320/240";
+              }}
+            />
+            <div>
+              <span>Top pick</span>
+              <strong>{featuredProducts[0]?.title}</strong>
+              <p>${featuredProducts[0]?.price}</p>
+            </div>
           </div>
         </div>
       </section>

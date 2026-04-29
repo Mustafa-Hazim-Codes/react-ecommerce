@@ -27,6 +27,9 @@ const Navbar = () => {
         <NavLink to="/" onClick={() => setIsOpen(false)}>
           Home
         </NavLink>
+        <NavLink to="/products" onClick={() => setIsOpen(false)}>
+          Products
+        </NavLink>
         <NavLink to="/cart" onClick={() => setIsOpen(false)}>
           Cart
         </NavLink>

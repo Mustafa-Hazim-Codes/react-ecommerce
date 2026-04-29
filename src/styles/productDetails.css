@@ -1,8 +1,13 @@
 .product-details {
   display: grid;
-  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(300px, 0.95fr) minmax(0, 1.05fr);
   gap: clamp(1.25rem, 5vw, 3rem);
   align-items: start;
+}
+
+.product-gallery {
+  display: grid;
+  gap: 0.85rem;
 }
 
 .image-container {
@@ -19,10 +24,62 @@
   object-fit: cover;
 }
 
+.gallery-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.gallery-thumbnails button {
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 0;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+.gallery-thumbnails button:hover,
+.gallery-thumbnails button:focus-visible,
+.gallery-thumbnails .active-thumbnail {
+  border-color: var(--accent);
+}
+
+.gallery-thumbnails img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
 .details {
   display: grid;
   gap: 1rem;
   min-width: 0;
+}
+
+.back-link {
+  width: fit-content;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.product-category {
+  width: fit-content;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: #0f766e;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 900;
+  text-transform: capitalize;
 }
 
 .details h1 {
@@ -33,6 +90,31 @@
 .description {
   max-width: 56ch;
   color: var(--muted);
+}
+
+.detail-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0.25rem 0;
+}
+
+.detail-highlights span {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 0.8rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
 }
 
 .add-to-cart {
@@ -54,7 +136,24 @@
     grid-template-columns: 1fr;
   }
 
-  .add-to-cart {
+  .detail-actions {
+    display: grid;
+  }
+
+  .add-to-cart,
+  .detail-actions .ui-button {
     width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-thumbnails {
+    grid-template-columns: repeat(4, minmax(64px, 1fr));
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
+
+  .detail-highlights {
+    grid-template-columns: 1fr;
   }
 }
