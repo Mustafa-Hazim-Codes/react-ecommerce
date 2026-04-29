@@ -1,21 +1,28 @@
 import { useState } from "react";
-import { useCart } from "../context/CartContext";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Card, Input, Select } from "../components/ui";
+import {
+  clearCart,
+  selectCartItems,
+  selectCartShipping,
+  selectCartSubtotal,
+  selectCartTax,
+  selectCartTotal,
+} from "../store/cartSlice";
 
 const Checkout = () => {
-  const { cartItems, clearCart, getSubtotal, getShipping, getTax, getTotalPrice } =
-    useCart();
+  const dispatch = useDispatch();
+  const cartItems = useSelector(selectCartItems);
+  const subtotal = useSelector(selectCartSubtotal);
+  const shipping = useSelector(selectCartShipping);
+  const tax = useSelector(selectCartTax);
+  const total = useSelector(selectCartTotal);
 
   const [form, setForm] = useState({
     name: "",
     address: "",
     payment: "card",
   });
-
-  const subtotal = getSubtotal();
-  const shipping = getShipping();
-  const tax = getTax();
-  const total = getTotalPrice();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,7 +33,7 @@ const Checkout = () => {
     }
 
     alert("Order placed successfully!");
-    clearCart();
+    dispatch(clearCart());
   };
 
   return (

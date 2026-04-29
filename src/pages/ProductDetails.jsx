@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useCart } from "../context/CartContext";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { Button } from "../components/ui";
 import products from "../data/products";
+import { addToCart } from "../store/cartSlice";
+import { selectIsWishlisted, toggleWishlist } from "../store/wishlistSlice";
 import "../styles/productDetails.css";
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const { addToCart } = useCart();
+  const dispatch = useDispatch();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const productId = Number(id);
@@ -45,6 +48,7 @@ const ProductDetails = () => {
         ];
 
   const selectedImage = galleryImages[selectedImageIndex] || galleryImages[0];
+  const wishlisted = useSelector(selectIsWishlisted(product.id));
   const rating = 4 + (product.id % 10) / 10;
   const reviewCount = 18 + product.id * 7;
   const reviews = [
@@ -121,8 +125,26 @@ const ProductDetails = () => {
         </div>
 
         <div className="detail-actions">
-          <Button className="add-to-cart" onClick={() => addToCart(product)}>
+          <Button
+            className="add-to-cart"
+            onClick={() => {
+              dispatch(addToCart(product));
+              toast.success("Added to cart", { theme: "colored" });
+            }}
+          >
             Add to Cart
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => {
+              dispatch(toggleWishlist(product));
+              toast.info(
+                wishlisted ? "Removed from wishlist" : "Added to wishlist",
+                { theme: wishlisted ? "light" : "colored" }
+              );
+            }}
+          >
+            {wishlisted ? "Saved to Wishlist" : "Add to Wishlist"}
           </Button>
           <Button as={Link} to="/cart" variant="outline">
             View Cart

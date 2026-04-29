@@ -1,24 +1,42 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useCart } from "../context/CartContext";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { Button, Card } from "../components/ui";
+import {
+  clearCart,
+  removeFromCart,
+  selectCartItemCount,
+  selectCartItems,
+  selectCartShipping,
+  selectCartSubtotal,
+  selectCartTax,
+  selectCartTotal,
+  updateQuantity,
+} from "../store/cartSlice";
 
 const Cart = () => {
-  const {
-    cartItems,
-    updateQuantity,
-    removeFromCart,
-    clearCart,
-    getSubtotal,
-    getShipping,
-    getTax,
-    getTotalPrice,
-    getItemCount,
-  } = useCart();
+  const dispatch = useDispatch();
+  const cartItems = useSelector(selectCartItems);
+  const itemCount = useSelector(selectCartItemCount);
+  const subtotal = useSelector(selectCartSubtotal);
+  const shipping = useSelector(selectCartShipping);
+  const tax = useSelector(selectCartTax);
+  const total = useSelector(selectCartTotal);
   const navigate = useNavigate();
-  const subtotal = getSubtotal();
-  const shipping = getShipping();
-  const tax = getTax();
-  const total = getTotalPrice();
+
+  const handleQuantityChange = (productId, amount) => {
+    dispatch(updateQuantity({ productId, amount }));
+  };
+
+  const handleRemove = (productId) => {
+    dispatch(removeFromCart(productId));
+    toast.error("Removed from cart");
+  };
+
+  const handleClearCart = () => {
+    dispatch(clearCart());
+    toast.info("Cart cleared");
+  };
 
   if (cartItems.length === 0) {
     return (
@@ -39,9 +57,9 @@ const Cart = () => {
         <div>
           <p className="section-kicker">Shopping cart</p>
           <h1>Your Cart</h1>
-          <p>{getItemCount()} items ready for checkout</p>
+          <p>{itemCount} items ready for checkout</p>
         </div>
-        <Button variant="outline" size="sm" onClick={clearCart}>
+        <Button variant="outline" size="sm" onClick={handleClearCart}>
           Clear Cart
         </Button>
       </div>
@@ -86,14 +104,14 @@ const Cart = () => {
                   <div className="quantity-controls" aria-label={`Quantity for ${item.title}`}>
                     <Button
                       aria-label={`Decrease quantity for ${item.title}`}
-                      onClick={() => updateQuantity(item.id, -1)}
+                      onClick={() => handleQuantityChange(item.id, -1)}
                     >
                       &minus;
                     </Button>
                     <span>{item.quantity}</span>
                     <Button
                       aria-label={`Increase quantity for ${item.title}`}
-                      onClick={() => updateQuantity(item.id, 1)}
+                      onClick={() => handleQuantityChange(item.id, 1)}
                     >
                       +
                     </Button>
@@ -103,7 +121,7 @@ const Cart = () => {
                     variant="danger"
                     size="sm"
                     className="remove-btn"
-                    onClick={() => removeFromCart(item.id)}
+                    onClick={() => handleRemove(item.id)}
                   >
                     Remove
                   </Button>

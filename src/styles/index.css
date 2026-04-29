@@ -530,6 +530,11 @@ p {
   gap: clamp(1rem, 3vw, 1.5rem);
 }
 
+.wishlist-page {
+  display: grid;
+  gap: clamp(1rem, 3vw, 1.5rem);
+}
+
 .listing-header {
   display: flex;
   align-items: end;
