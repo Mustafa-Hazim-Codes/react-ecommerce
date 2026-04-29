@@ -1,4 +1,3 @@
-// src/pages/Checkout.jsx
 import { useState } from "react";
 import { useCart } from "../context/CartContext";
 
@@ -33,7 +32,6 @@ const Checkout = () => {
       <h2 className="checkout-title">Checkout</h2>
 
       <div className="checkout-wrapper">
-        {/* LEFT: FORM */}
         <form onSubmit={handleSubmit} className="checkout-form">
           <h3>Shipping Details</h3>
 
@@ -41,28 +39,22 @@ const Checkout = () => {
             type="text"
             placeholder="Full Name"
             value={form.name}
-            onChange={(e) =>
-              setForm({ ...form, name: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
           />
 
           <input
             type="text"
             placeholder="Address"
             value={form.address}
-            onChange={(e) =>
-              setForm({ ...form, address: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, address: e.target.value })}
           />
 
           <select
             value={form.payment}
-            onChange={(e) =>
-              setForm({ ...form, payment: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, payment: e.target.value })}
           >
-            <option value="card">💳 Card</option>
-            <option value="cash">💵 Cash on Delivery</option>
+            <option value="card">Card</option>
+            <option value="cash">Cash on Delivery</option>
           </select>
 
           <button className="checkout-btn" type="submit">
@@ -70,7 +62,6 @@ const Checkout = () => {
           </button>
         </form>
 
-        {/* RIGHT: SUMMARY */}
         <div className="checkout-summary">
           <h3>Order Summary</h3>
 
@@ -79,9 +70,9 @@ const Checkout = () => {
           ) : (
             cartItems.map((item) => (
               <div key={item.id} className="summary-item">
-                <span>{item.title}</span> &nbsp;
+                <span>{item.title}</span>
                 <span>
-                  {item.quantity} × ${item.price}
+                  {item.quantity} &times; ${item.price}
                 </span>
               </div>
             ))

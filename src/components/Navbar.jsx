@@ -7,14 +7,22 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <h2 className="logo"><Link to={'/'}>Shop</Link></h2>
+      <h2 className="logo">
+        <Link to="/">Shop</Link>
+      </h2>
 
-      {/* Hamburger */}
-      <div className="hamburger" onClick={() => setIsOpen(!isOpen)}>
-        ☰
-      </div>
+      <button
+        type="button"
+        className="hamburger"
+        aria-label="Toggle navigation menu"
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span />
+        <span />
+        <span />
+      </button>
 
-      {/* Links */}
       <div className={`nav-links ${isOpen ? "open" : ""}`}>
         <NavLink to="/" onClick={() => setIsOpen(false)}>
           Home

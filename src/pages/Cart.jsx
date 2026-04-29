@@ -1,19 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const { cartItems, updateQuantity, removeFromCart, getTotalPrice } = useCart();
   const navigate = useNavigate();
 
-
-
-
   if (cartItems.length === 0) {
     return (
       <div className="empty-cart">
-        <h2>Your cart is empty 🛒</h2>
-        <p>Looks like you haven’t added anything yet.</p>
+        <h2>Your cart is empty</h2>
+        <p>Looks like you haven't added anything yet.</p>
 
         <Link to="/" className="shop-btn">
           Go Shopping
@@ -28,8 +24,6 @@ const Cart = () => {
 
       {cartItems.map((item) => (
         <div key={item.id} className="cart-item">
-
-          {/* Image */}
           <img
             src={item.image}
             alt={item.title}
@@ -40,15 +34,14 @@ const Cart = () => {
           />
 
           <div className="cart-info">
-            {/* Clickable title */}
             <Link to={`/product/${item.id}`} className="cart-title">
               {item.title}
             </Link>
 
-            <p style={{ marginTop: 8 }}>${item.price}</p>
+            <p className="cart-price">${item.price}</p>
 
             <div className="quantity-controls">
-              <button onClick={() => updateQuantity(item.id, -1)}>−</button>
+              <button onClick={() => updateQuantity(item.id, -1)}>&minus;</button>
               <span>{item.quantity}</span>
               <button onClick={() => updateQuantity(item.id, 1)}>+</button>
             </div>
@@ -60,12 +53,13 @@ const Cart = () => {
         </div>
       ))}
 
-      {/* 💰 Total */}
-      <h2>Total: ${getTotalPrice().toFixed(2)}</h2>
+      <div className="cart-summary">
+        <h2>Total: ${getTotalPrice().toFixed(2)}</h2>
 
-      <button className="checkout-btn-cart" onClick={() => navigate("/checkout")}>
-        Proceed to Checkout
-      </button>
+        <button className="checkout-btn-cart" onClick={() => navigate("/checkout")}>
+          Proceed to Checkout
+        </button>
+      </div>
     </div>
   );
 };
