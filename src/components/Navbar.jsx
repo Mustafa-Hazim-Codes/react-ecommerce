@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 import "../styles/navbar.css";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { getItemCount } = useCart();
+  const cartCount = getItemCount();
 
   return (
     <nav className="navbar">
@@ -30,8 +33,9 @@ const Navbar = () => {
         <NavLink to="/products" onClick={() => setIsOpen(false)}>
           Products
         </NavLink>
-        <NavLink to="/cart" onClick={() => setIsOpen(false)}>
+        <NavLink to="/cart" className="cart-nav-link" onClick={() => setIsOpen(false)}>
           Cart
+          {cartCount > 0 && <span>{cartCount}</span>}
         </NavLink>
       </div>
     </nav>

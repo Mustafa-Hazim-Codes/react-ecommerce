@@ -59,6 +59,8 @@ const ProductDetails = () => {
       text: "Good quality overall. The product matched the photos and was easy to use.",
     },
   ];
+  const filledStar = "\u2605";
+  const emptyStar = "\u2606";
 
   return (
     <div className="product-details">
@@ -103,8 +105,8 @@ const ProductDetails = () => {
         <h1>{product.title}</h1>
         <div className="product-rating" aria-label={`Rated ${rating.toFixed(1)} out of 5`}>
           <span aria-hidden="true">
-            {"★".repeat(Math.floor(rating))}
-            {rating < 5 ? "☆" : ""}
+            {filledStar.repeat(Math.floor(rating))}
+            {rating < 5 ? emptyStar : ""}
           </span>
           <strong>{rating.toFixed(1)}</strong>
           <a href="#reviews">{reviewCount} reviews</a>
@@ -153,7 +155,7 @@ const ProductDetails = () => {
                 <div>
                   <strong>{review.name}</strong>
                   <span aria-label={`${review.rating} out of 5 stars`}>
-                    {"★".repeat(review.rating)}
+                    {filledStar.repeat(review.rating)}
                   </span>
                 </div>
                 <p>{review.text}</p>

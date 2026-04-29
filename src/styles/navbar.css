@@ -30,6 +30,9 @@
 }
 
 .nav-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   border-radius: 8px;
   color: #cbd5e1;
   padding: 0.55rem 0.75rem;
@@ -42,6 +45,20 @@
 .nav-links a.active {
   background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
+}
+
+.cart-nav-link span {
+  display: inline-flex;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #14b8a6;
+  color: #042f2e;
+  padding: 0 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 900;
 }
 
 .hamburger {

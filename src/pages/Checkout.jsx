@@ -3,7 +3,8 @@ import { useCart } from "../context/CartContext";
 import { Button, Card, Input, Select } from "../components/ui";
 
 const Checkout = () => {
-  const { cartItems, clearCart } = useCart();
+  const { cartItems, clearCart, getSubtotal, getShipping, getTax, getTotalPrice } =
+    useCart();
 
   const [form, setForm] = useState({
     name: "",
@@ -11,10 +12,10 @@ const Checkout = () => {
     payment: "card",
   });
 
-  const total = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
+  const subtotal = getSubtotal();
+  const shipping = getShipping();
+  const tax = getTax();
+  const total = getTotalPrice();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -78,6 +79,19 @@ const Checkout = () => {
               </div>
             ))
           )}
+
+          <div className="summary-item">
+            <span>Subtotal</span>
+            <span>${subtotal.toFixed(2)}</span>
+          </div>
+          <div className="summary-item">
+            <span>Shipping</span>
+            <span>{shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}</span>
+          </div>
+          <div className="summary-item">
+            <span>Estimated tax</span>
+            <span>${tax.toFixed(2)}</span>
+          </div>
 
           <div className="summary-total">
             <span>Total</span>

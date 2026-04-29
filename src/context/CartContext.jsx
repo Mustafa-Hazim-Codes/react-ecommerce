@@ -1,18 +1,30 @@
-import { useEffect } from "react";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const CartContext = createContext();
+const CART_STORAGE_KEY = "shop-cart";
+
+const loadStoredCart = () => {
+    try {
+        const storedCart = localStorage.getItem(CART_STORAGE_KEY);
+        const parsedCart = storedCart ? JSON.parse(storedCart) : [];
+
+        return Array.isArray(parsedCart) ? parsedCart : [];
+    } catch {
+        localStorage.removeItem(CART_STORAGE_KEY);
+        return [];
+    }
+};
 
 export const CartProvider = ({ children }) => {
-    const [cartItems, setCartItems] = useState(() => {
-        const storedCart = localStorage.getItem("cart");
-
-        return storedCart ? JSON.parse(storedCart) : [];
-    });
+    const [cartItems, setCartItems] = useState(loadStoredCart);
 
     useEffect(() => {
-        localStorage.setItem("cart", JSON.stringify(cartItems));
+        try {
+            localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
+        } catch {
+            toast.error("Unable to save cart");
+        }
     }, [cartItems]);
 
     // Add to cart
@@ -59,10 +71,32 @@ export const CartProvider = ({ children }) => {
         );
     };
 
-    const getTotalPrice = () => {
+    const getSubtotal = () => {
         return cartItems.reduce((total, item) => {
             return total + item.price * item.quantity;
         }, 0);
+    };
+
+    const getItemCount = () => {
+        return cartItems.reduce((total, item) => total + item.quantity, 0);
+    };
+
+    const getShipping = () => {
+        const subtotal = getSubtotal();
+
+        if (subtotal === 0 || subtotal >= 100) {
+            return 0;
+        }
+
+        return 9.99;
+    };
+
+    const getTax = () => {
+        return getSubtotal() * 0.08;
+    };
+
+    const getTotalPrice = () => {
+        return getSubtotal() + getShipping() + getTax();
     };
 
     const removeFromCart = (productId) => {
@@ -73,6 +107,7 @@ export const CartProvider = ({ children }) => {
     };
 
     const clearCart = () => {
+        toast.info("Cart cleared", {});
         setCartItems([]);
     };
 
@@ -84,6 +119,10 @@ export const CartProvider = ({ children }) => {
                 removeFromCart,
                 updateQuantity,
                 getTotalPrice,
+                getSubtotal,
+                getShipping,
+                getTax,
+                getItemCount,
                 clearCart,
             }}
         >
