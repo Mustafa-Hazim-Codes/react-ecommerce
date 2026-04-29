@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
+import { Card } from "./ui";
 import "../styles/productCard.css";
 
 const ProductCard = ({ product }) => {
   return (
-    <Link to={`/product/${product.id}`} className="product-card">
+    <Card
+      as={Link}
+      to={`/product/${product.id}`}
+      className="product-card"
+      interactive
+    >
       <div className="card-image">
         <img
           src={product.image}
@@ -18,7 +24,7 @@ const ProductCard = ({ product }) => {
         <h3>{product.title}</h3>
         <p className="price">${product.price}</p>
       </div>
-    </Link>
+    </Card>
   );
 };
 

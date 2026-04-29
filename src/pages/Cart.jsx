@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { Button, Card } from "../components/ui";
 
 const Cart = () => {
   const { cartItems, updateQuantity, removeFromCart, getTotalPrice } = useCart();
@@ -11,9 +12,9 @@ const Cart = () => {
         <h2>Your cart is empty</h2>
         <p>Looks like you haven't added anything yet.</p>
 
-        <Link to="/" className="shop-btn">
+        <Button as={Link} to="/" className="shop-btn">
           Go Shopping
-        </Link>
+        </Button>
       </div>
     );
   }
@@ -23,7 +24,7 @@ const Cart = () => {
       <h1>Your Cart</h1>
 
       {cartItems.map((item) => (
-        <div key={item.id} className="cart-item">
+        <Card key={item.id} className="cart-item">
           <img
             src={item.image}
             alt={item.title}
@@ -41,24 +42,39 @@ const Cart = () => {
             <p className="cart-price">${item.price}</p>
 
             <div className="quantity-controls">
-              <button onClick={() => updateQuantity(item.id, -1)}>&minus;</button>
+              <Button
+                aria-label={`Decrease quantity for ${item.title}`}
+                onClick={() => updateQuantity(item.id, -1)}
+              >
+                &minus;
+              </Button>
               <span>{item.quantity}</span>
-              <button onClick={() => updateQuantity(item.id, 1)}>+</button>
+              <Button
+                aria-label={`Increase quantity for ${item.title}`}
+                onClick={() => updateQuantity(item.id, 1)}
+              >
+                +
+              </Button>
             </div>
 
-            <button className="remove-btn" onClick={() => removeFromCart(item.id)}>
+            <Button
+              variant="danger"
+              size="sm"
+              className="remove-btn"
+              onClick={() => removeFromCart(item.id)}
+            >
               Remove
-            </button>
+            </Button>
           </div>
-        </div>
+        </Card>
       ))}
 
       <div className="cart-summary">
         <h2>Total: ${getTotalPrice().toFixed(2)}</h2>
 
-        <button className="checkout-btn-cart" onClick={() => navigate("/checkout")}>
+        <Button className="checkout-btn-cart" onClick={() => navigate("/checkout")}>
           Proceed to Checkout
-        </button>
+        </Button>
       </div>
     </div>
   );

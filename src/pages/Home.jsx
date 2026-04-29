@@ -3,6 +3,7 @@ import products from "../data/products";
 import ProductCard from "../components/ProductCard";
 import { useMemo } from "react";
 import Spinner from "../components/Spinner";
+import { Button, Input } from "../components/ui";
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -53,27 +54,83 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Products</h1>
+      <section className="home-hero" aria-labelledby="home-hero-title">
+        <div className="hero-copy">
+          <p className="hero-kicker">Fresh picks for everyday upgrades</p>
+          <h1 id="home-hero-title">Shop smarter essentials in one place</h1>
+          <p className="hero-description">
+            Browse practical electronics, fashion, and accessories with quick
+            filtering and a simple cart flow built for easy checkout.
+          </p>
 
-      <input
-        type="text"
-        placeholder="Search products..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="search-input"
-      />
+          <div className="hero-actions">
+            <Button as="a" href="#products" variant="light">
+              Shop Now
+            </Button>
+            <Button as="a" href="#filters" variant="ghost-light">
+              Browse Categories
+            </Button>
+          </div>
+
+          <div className="hero-stats" aria-label="Store highlights">
+            <span>
+              <strong>{products.length}</strong>
+              Products
+            </span>
+            <span>
+              <strong>{categories.length - 1}</strong>
+              Categories
+            </span>
+            <span>
+              <strong>${Math.round(maxProductPrice)}</strong>
+              Top Price
+            </span>
+          </div>
+        </div>
+
+        <div className="hero-product" aria-label="Featured product">
+          <img
+            src={products[0]?.image}
+            alt={products[0]?.title || "Featured product"}
+            onError={(e) => {
+              e.target.src = "https://picsum.photos/560/420";
+            }}
+          />
+          <div>
+            <span>Featured</span>
+            <strong>{products[0]?.title}</strong>
+            <p>${products[0]?.price}</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="products" className="products-section">
+        <div className="section-heading">
+          <h2>Products</h2>
+          <p>{filteredProducts.length} items available</p>
+        </div>
+
+        <Input
+          type="text"
+          placeholder="Search products..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="search-input"
+        />
 
 
       {/* Filters */}
-      <div className="filters">
+      <div id="filters" className="filters">
         {categories.map((cat) => (
-          <button
+          <Button
             key={cat}
+            variant={selectedCategory === cat ? "primary" : "outline"}
+            size="sm"
             onClick={() => setSelectedCategory(cat)}
             className={selectedCategory === cat ? "active-filter" : ""}
           >
             {cat}
-          </button>
+          </Button>
         ))}
       </div>
 
@@ -100,6 +157,7 @@ const Home = () => {
       </div>
 
       {filteredProducts.length === 0 && <p>No products found</p>}
+      </section>
     </div>
   );
 };

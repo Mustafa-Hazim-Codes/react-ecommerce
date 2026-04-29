@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useCart } from "../context/CartContext";
+import { Button, Card, Input, Select } from "../components/ui";
 
 const Checkout = () => {
   const { cartItems, clearCart } = useCart();
@@ -32,37 +33,37 @@ const Checkout = () => {
       <h2 className="checkout-title">Checkout</h2>
 
       <div className="checkout-wrapper">
-        <form onSubmit={handleSubmit} className="checkout-form">
+        <Card as="form" onSubmit={handleSubmit} className="checkout-form">
           <h3>Shipping Details</h3>
 
-          <input
+          <Input
             type="text"
             placeholder="Full Name"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
           />
 
-          <input
+          <Input
             type="text"
             placeholder="Address"
             value={form.address}
             onChange={(e) => setForm({ ...form, address: e.target.value })}
           />
 
-          <select
+          <Select
             value={form.payment}
             onChange={(e) => setForm({ ...form, payment: e.target.value })}
           >
             <option value="card">Card</option>
             <option value="cash">Cash on Delivery</option>
-          </select>
+          </Select>
 
-          <button className="checkout-btn" type="submit">
+          <Button className="checkout-btn" type="submit" fullWidth>
             Place Order
-          </button>
-        </form>
+          </Button>
+        </Card>
 
-        <div className="checkout-summary">
+        <Card className="checkout-summary">
           <h3>Order Summary</h3>
 
           {cartItems.length === 0 ? (
@@ -82,7 +83,7 @@ const Checkout = () => {
             <span>Total</span>
             <strong>${total.toFixed(2)}</strong>
           </div>
-        </div>
+        </Card>
       </div>
     </div>
   );

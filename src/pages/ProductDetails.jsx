@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { Button } from "../components/ui";
 import products from "../data/products";
 import "../styles/productDetails.css";
 
@@ -47,9 +48,9 @@ const ProductDetails = () => {
         <p className="price">${product.price}</p>
         <p className="description">{product.description}</p>
 
-        <button className="add-to-cart" onClick={() => addToCart(product)}>
+        <Button className="add-to-cart" onClick={() => addToCart(product)}>
           Add to Cart
-        </button>
+        </Button>
       </div>
     </div>
   );
