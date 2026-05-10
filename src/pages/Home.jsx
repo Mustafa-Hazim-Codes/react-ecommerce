@@ -78,23 +78,23 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <div className="home-page">
       <section className="home-hero" aria-labelledby="home-hero-title">
         <div className="hero-content">
           <div className="hero-copy">
-            <p className="hero-kicker">Fresh picks for everyday upgrades</p>
-            <h1 id="home-hero-title">Shop sharper gear for work, style, and play</h1>
+            <p className="hero-kicker">Premium everyday essentials</p>
+            <h1 id="home-hero-title">Curated goods for a sharper daily rhythm</h1>
             <p className="hero-description">
-              Curated essentials, clean filtering, and a checkout flow that keeps
-              your next upgrade easy from first click to cart.
+              Discover refined tech, wardrobe staples, and practical upgrades
+              selected for quality, utility, and quiet confidence.
             </p>
 
             <div className="hero-actions">
               <Button as={Link} to="/products" variant="light">
-                Shop Now
+                Shop Collection
               </Button>
               <Button as="a" href="#categories-title" variant="ghost-light">
-                Explore Categories
+                Explore Edits
               </Button>
             </div>
           </div>
@@ -121,7 +121,7 @@ const Home = () => {
               src={products[0]?.image}
               alt={products[0]?.title || "Featured product"}
               onError={(e) => {
-                e.target.src = "https://picsum.photos/560/420";
+                e.target.src = "https://placehold.co/560x420";
               }}
             />
             <div>
@@ -136,7 +136,7 @@ const Home = () => {
               src={featuredProducts[0]?.image}
               alt={featuredProducts[0]?.title || "Featured product"}
               onError={(e) => {
-                e.target.src = "https://picsum.photos/320/240";
+                e.target.src = "https://placehold.co/320x240";
               }}
             />
             <div>
@@ -148,13 +148,73 @@ const Home = () => {
         </div>
       </section>
 
+      <section className="premium-strip" aria-label="Store benefits">
+        <div>
+          <strong>Free shipping</strong>
+          <span>On orders over $100</span>
+        </div>
+        <div>
+          <strong>Curated catalog</strong>
+          <span>Focused picks, no clutter</span>
+        </div>
+        <div>
+          <strong>Secure checkout</strong>
+          <span>Fast cart and saved wishlist</span>
+        </div>
+      </section>
+
+      <section className="editorial-section" aria-labelledby="editorial-title">
+        <div className="section-heading">
+          <div>
+            <p className="section-kicker">The latest edit</p>
+            <h2 id="editorial-title">Built around how you actually move</h2>
+          </div>
+        </div>
+
+        <div className="editorial-grid">
+          <article className="editorial-card editorial-card-large">
+            <img
+              src="https://placehold.co/1200x240"
+              alt="Premium desk setup"
+            />
+            <div>
+              <span>Work smarter</span>
+              <h3>Clean tech for focused days</h3>
+              <p>Upgrade the tools you reach for every morning.</p>
+            </div>
+          </article>
+
+           <article className="editorial-card">
+            <img
+              src="https://placehold.co/900x240"
+              alt="Refined fashion essentials"
+            />
+            <div>
+              <span>Style edit</span>
+              <h3>Easy pieces with polish</h3>
+            </div>
+          </article>
+
+          <article className="editorial-card">
+            <img
+              src="https://placehold.co/900x240"
+              alt="Accessories and daily carry"
+            />
+            <div>
+              <span>Daily carry</span>
+              <h3>Small upgrades, big difference</h3>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section className="featured-section" aria-labelledby="featured-title">
         <div className="section-heading">
           <div>
             <p className="section-kicker">Featured products</p>
-            <h2 id="featured-title">Popular upgrades worth a look</h2>
+            <h2 id="featured-title">Signature picks from the collection</h2>
           </div>
-          <Button as="a" href="#products" variant="outline" size="sm">
+          <Button as={Link} to="/products" variant="outline" size="sm">
             View All
           </Button>
         </div>
@@ -170,7 +230,7 @@ const Home = () => {
         <div className="section-heading">
           <div>
             <p className="section-kicker">Shop by category</p>
-            <h2 id="categories-title">Find what fits your day</h2>
+            <h2 id="categories-title">Explore curated departments</h2>
           </div>
         </div>
 
@@ -205,7 +265,10 @@ const Home = () => {
 
       <section id="products" className="products-section">
         <div className="section-heading">
-          <h2>Products</h2>
+          <div>
+            <p className="section-kicker">Browse the catalog</p>
+            <h2>All products</h2>
+          </div>
           <p>{filteredProducts.length} items available</p>
         </div>
 
